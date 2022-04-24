@@ -27,6 +27,7 @@ exports.getBrand = async (req, res) => {
 
 exports.getsBrand = async (req, res) => {
   try {
+    console.log('merhaba');
     const allBrands = await brandService.gets();
 
     res.status(200).json({ success: true, allBrands });

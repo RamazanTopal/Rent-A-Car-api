@@ -1,13 +1,13 @@
-class ColorService {
+class UserService {
   constructor({
-    colorSchema,
+    userSchema,
   }) {
-    this.colorSchema = colorSchema;
+    this.userSchema = userSchema;
   }
 
-  async create(color) {
+  async create(user) {
     try {
-      await this.colorSchema.create(color);
+      await this.userSchema.create(user);
     } catch (error) {
       throw new Error(error);
     }
@@ -15,8 +15,8 @@ class ColorService {
 
   async get(id) {
     try {
-      const color = await this.colorSchema.findOne({ _id: id });
-      return color;
+      const user = await this.userSchema.findOne({ _id: id });
+      return user;
     } catch (error) {
       throw new Error(error);
     }
@@ -24,8 +24,8 @@ class ColorService {
 
   async gets() {
     try {
-      const allColor = await this.colorSchema.find();
-      return allColor;
+      const allUser = await this.userSchema.find();
+      return allUser;
     } catch (error) {
       throw new Error(error);
     }
@@ -33,7 +33,7 @@ class ColorService {
 
   async update(id, data) {
     try {
-      await this.colorSchema.findByIdAndUpdate(id, data, { new: true });
+      await this.userSchema.findByIdAndUpdate(id, data, { new: true });
     } catch (error) {
       throw new Error(error);
     }
@@ -41,11 +41,11 @@ class ColorService {
 
   async delete(id) {
     try {
-      await this.colorSchema.findByIdAndDelete(id);
+      await this.userSchema.findByIdAndDelete(id);
     } catch (error) {
       throw new Error(error);
     }
   }
 }
 
-module.exports = ColorService;
+module.exports = UserService;
