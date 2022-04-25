@@ -33,7 +33,6 @@ class RentalService {
 
   async update(id, data) {
     try {
-      console.log('data', data);
       await this.rentalSchema.findByIdAndUpdate(id, data, { new: true });
     } catch (error) {
       throw new Error(error);

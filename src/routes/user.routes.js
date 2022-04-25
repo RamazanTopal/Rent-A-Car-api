@@ -3,7 +3,7 @@ const {
   createUser, getUser, getsUser, updateUser, deleteUser,
 } = require('../controllers/user.controller');
 
-const { createValidations, updateValidations } = require('../validations/rental');
+const { createValidations, updateValidations } = require('../validations/user');
 const validate = require('../middlewares/validate');
 
 router.use('/users', router);
