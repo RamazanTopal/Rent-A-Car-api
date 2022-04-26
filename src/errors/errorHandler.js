@@ -8,7 +8,7 @@ module.exports = (err, req, res, next) => {
     console.info('API ERROR', message, status);
 
     res.status(err.status).json({
-      status, message, errorCode, data,
+      status, message: message.replace('ApiError:', ''), errorCode, data,
     });
   } else if (err.name === 'ValidationError') {
     console.info('VALIDATION ERROR', err);
