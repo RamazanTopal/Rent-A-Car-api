@@ -1,4 +1,5 @@
 const { container } = require('../config/awilix');
+const { generateAccessToken, generateRefreshToken } = require('../utils/Helper');
 
 const userService = container.resolve('userService');
 
@@ -14,8 +15,16 @@ exports.createUser = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const user = req.body;
-    const userInformation = await userService.login(user);
+    const userBody = req.body;
+    const user = await userService.login(userBody);
+
+    const userInformation = {
+      ...user.toObject(),
+      tokens: {
+        access_token: generateAccessToken(user),
+        refresh_token: generateRefreshToken(user),
+      },
+    };
     res.status(200).json({ success: true, userInformation });
   } catch (error) {
     next(error);
