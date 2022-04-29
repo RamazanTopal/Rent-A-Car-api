@@ -13,7 +13,8 @@ const authentications = async (req, res, next) => {
   if (!user) {
     return res.status(404).json({ message: 'Invalid Token' });
   }
-  req.user = user;
+  // eslint-disable-next-line no-underscore-dangle
+  req.user = user._doc;
   return next();
 };
 

@@ -61,9 +61,9 @@ class UserService {
     }
   }
 
-  async update(id, data) {
+  async update(where, data) {
     try {
-      await this.userSchema.findByIdAndUpdate(id, data, { new: true });
+      await this.userSchema.findOneAndUpdate(where, data, { new: true });
     } catch (error) {
       throw new Error(error);
     }

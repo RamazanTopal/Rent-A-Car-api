@@ -1,5 +1,7 @@
 const { container } = require('../config/awilix');
 const { generateAccessToken, generateRefreshToken } = require('../utils/Helper');
+const { hashPassword } = require('../utils/Helper');
+const ApiError = require('../errors/apiError');
 
 const userService = container.resolve('userService');
 
@@ -26,6 +28,22 @@ exports.login = async (req, res, next) => {
       },
     };
     res.status(200).json({ success: true, userInformation });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { newPassword } = req.body;
+    const result = await userService.update(
+      { userEmail: req.body.email },
+      { userPassword: hashPassword(newPassword) },
+    );
+    if (result) {
+      throw new ApiError({ message: 'This email address is used. Please try a different email address.', status: 400 });
+    }
+    res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
