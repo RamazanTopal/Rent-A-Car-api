@@ -18,9 +18,13 @@ const loginValidations = joi.object({
   userEmail: joi.string().min(6),
   userPassword: joi.string().min(6),
 });
+const passwordValidations = joi.object({
+  password: joi.string().min(6),
+});
 
 module.exports = {
   createValidations,
   updateValidations,
   loginValidations,
+  passwordValidations,
 };

@@ -35,13 +35,27 @@ exports.login = async (req, res, next) => {
 
 exports.resetPassword = async (req, res, next) => {
   try {
-    const { newPassword } = req.body;
+    const { password, email } = req.body;
     const result = await userService.update(
-      { userEmail: req.body.email },
-      { userPassword: hashPassword(newPassword) },
+      { userEmail: email },
+      { userPassword: hashPassword(password) },
     );
     if (result) {
       throw new ApiError({ message: 'This email address is used. Please try a different email address.', status: 400 });
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.changePassword = async (req, res, next) => {
+  try {
+    req.body.password = hashPassword(req.body.password);
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await userService.update({ _id: req.user?._id }, req.body);
+    if (result) {
+      throw new ApiError({ message: 'This password is not changed', status: 400 });
     }
     res.status(200).json({ success: true });
   } catch (error) {
